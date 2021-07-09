@@ -1,0 +1,26 @@
+#应用服务地址，省略端口号
+AppServer = "https://app.wildfirechat.net"
+ImServerHost = "wildfirechat.net"
+ImServerNodes = ["node1.wildfirechat.net", "node2.wildfirechat.net", "node3.wildfirechat.net"]
+RoutePort = 80
+LongLinkPort = 1883
+# web
+EnableWeb = true
+UseWSS = true
+# UseWSS为false时，默认是80；UseWSS为true时，默认是443
+WebRoutePort = 443
+# UseWSS为false时，默认是8083；为true时，默认是8084
+WsPort = 8084
+
+#备选地址配置
+EnableBackupHost = false
+BackupImServerHost = "im.wildfirechat.net"
+BackupImServerNodes = ["bk1.im.wildfirechat.net"]
+BackupRoutePort = 80
+BackupLongLinkPort = 1883
+
+# 备选地址是否支持web端
+EnableBackupHostWeb = false
+BackupUseWSS = false
+BackupWebRoutePort = 80
+BackupWsPort = 8084
