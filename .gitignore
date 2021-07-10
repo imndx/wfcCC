@@ -73,7 +73,7 @@ fabric.properties
 
 ### Go template
 # Binaries for programs and plugins
-*.exe
+#*.exe
 *.exe~
 *.dll
 *.so
