@@ -1,4 +1,4 @@
-#应用服务地址，省略端口号
+#应用服务地址，默认端口是8888，如无特殊设置，不能省略
 AppServer = "https://app.wildfirechat.net"
 #IM Server的域名
 ImServerHost = "wildfirechat.net"
