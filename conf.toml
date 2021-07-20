@@ -2,7 +2,7 @@
 AppServer = "https://app.wildfirechat.net"
 #IM Server的域名
 ImServerHost = "wildfirechat.net"
-#社区版IM Server时，和ImServerHost是一致的；专业版IM Server时，是集群每个节点配置的节点域名
+#社区版IM Server时，和ImServerHost是一致的，直接配置上ImServerHost即可；专业版IM Server时，是集群每个节点配置的节点域名
 ImServerNodes = ["node1.wildfirechat.net", "node2.wildfirechat.net", "node3.wildfirechat.net"]
 #短链接端口，默认是80，除非特殊定制端口，否则都是80
 RoutePort = 80

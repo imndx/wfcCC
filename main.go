@@ -22,6 +22,7 @@ func main() {
 
 	// 检查基本配置
 	checkAppServer(conf.AppServer)
+	checkAppServerCors(conf.AppServer)
 
 	var imVersionUrl = "http://" + conf.ImServerHost
 	if conf.RoutePort != 80 {
@@ -112,6 +113,36 @@ func checkIMServerVersion(addr string) bool {
 	}
 	fmt.Sprintln("检查IM Server版本号失败，返回信息未：", resp)
 	return false
+}
+
+func checkAppServerCors(addr string) bool {
+	pcSession, _ := url.Parse(addr)
+	req := &http.Request{
+		Method: "OPTIONS",
+		URL:    pcSession,
+	}
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		fmt.Println("检查App Server pc_session接口跨域失败", addr, err.Error())
+		return false
+	}
+	values := resp.Header.Values("Access-Control-Allow-Origin")
+	if len(values) != 1 || strings.Compare("*", values[0]) != 0 {
+		fmt.Println("App Server pc_session接口Access-Control-Allow-Origin配置不对", addr, values)
+		return false
+	}
+	values = resp.Header.Values("Access-Control-Allow-Headers")
+	for i := 0; i < len(values); i++ {
+		if strings.Index(values[i], "authToken") >= 0 {
+			fmt.Println("检查App Server pc_session接口跨域成功")
+			return true
+		}
+	}
+	fmt.Println("App Server pc_session接口Access-Control-Allow-Headers配置不对", values)
+
+	return false
+
 }
 
 func checkIMServerRouteCors(addr string) bool {
