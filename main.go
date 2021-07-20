@@ -22,10 +22,23 @@ func main() {
 
 	// 检查基本配置
 	checkAppServer(conf.AppServer)
-	checkIMServerVersion("http://" + conf.ImServerHost + "/api/version")
+
+	var imVersionUrl = "http://" + conf.ImServerHost
+	if conf.RoutePort != 80 {
+		imVersionUrl = fmt.Sprintf("%s:%d", imVersionUrl, conf.RoutePort)
+	}
+	imVersionUrl += "/api/version"
+	checkIMServerVersion(imVersionUrl)
+
 	//checkIMServerTCPPort(conf.ImServerHost, conf.LongLinkPort)
 	for _, node := range conf.ImServerNodes {
-		checkIMServerVersion("http://" + node + "/api/version")
+		var nodeUrl = "http://" + node
+		if conf.RoutePort != 80 {
+			nodeUrl = fmt.Sprintf("%s:%d", nodeUrl, conf.RoutePort)
+		}
+		nodeUrl += "/api/version"
+
+		checkIMServerVersion(nodeUrl)
 		checkIMServerTCPPort(node, conf.LongLinkPort)
 	}
 
@@ -40,11 +53,12 @@ func main() {
 		checkIMServerRouteCors(routeUrl)
 		for _, node := range conf.ImServerNodes {
 			checkIMServerTCPPort(node, conf.WsPort)
-		}	}
+		}
+	}
 
 	// 检查备选地址相关配置
 	if conf.EnableBackupHost {
-		checkIMServerVersion("http://" + conf.BackupImServerHost+ "/api/version")
+		checkIMServerVersion("http://" + conf.BackupImServerHost + "/api/version")
 		checkIMServerTCPPort(conf.BackupImServerHost, conf.BackupLongLinkPort)
 		for _, node := range conf.BackupImServerNodes {
 			checkIMServerVersion("http://" + node + "/api/version")
